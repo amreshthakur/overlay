@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .card-container {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 20px;
+      padding: 10px;
+      width: 100%;
+    }
+
+    .card {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: calc(25% - 20px);
+      text-decoration: none;
+      color: inherit;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h2 {
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+
+    .card p {
+      font-size: 1em;
+      color: #555;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        width: calc(50% - 20px);
+      }
+
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        width: 100%;
+      }
+    }
+
+    /* Overlay Styles */
+    #overlay,
+    #download-overlay,
+    #other-action-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      display: none;
+    }
+
+    .overlay-container {
+      width: 80%;
+      max-width: 800px;
+      background: #f6f6f6;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      padding: 20px;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 30px;
+      color: #fefefe;
+      background-color: #000000;
+      border: 1px solid #000000;
+      padding: 10px 10px;
+    }
+
+    #subject-list {
+      margin-top: 20px;
+    }
+
+    #subject-list ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #subject-list li {
+      padding: 1px 0;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    #subject-list a {
+      text-decoration: none;
+      color: #000000;
+    }
+
+    #subject-list a:hover {
+      text-decoration: underline;
+    }
+
+    #button-container {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #button-container button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    .download-btn {
+      padding: 5px 10px;
+      margin-left: 20px;
+      cursor: pointer;
+      background-color: #06ff1b;
+      color: white;
+      border: 5px in solid;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .download-btn:hover {
+      background-color: #ccff01c7;
+      text-decoration: none;
+    }
+
+    #ad-section {
+      border: 2px solid #000;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #download-btn {
+      display: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Card Container -->
+  <div class="card-container">
+    <div class="card"
+      onclick="openOverlay('CSIT Fifth Semester', [['Web Technology', 'https://amreshthakur.com.np/web-tech'], ['System Analysis and Design', 'https://amreshthakur.com.np/system-analysis'], ['Design and Analysis of Algorithms', 'https://amreshthakur.com.np/algorithms'], ['Simulation and Modelling', 'https://amreshthakur.com.np/simulation'], ['Cryptography', 'https://amreshthakur.com.np/cryptography'], ['Image Processing elective', 'https://amreshthakur.com.np/electives'], ['Society and Ethics in Information Technology elective', 'https://amreshthakur.com.np/electives'], ['Multimedia Computing elective', 'https://amreshthakur.com.np/electives'], ['Wireless Networking elective', 'https://amreshthakur.com.np/electives'], ['Knowledge Management elective', 'https://amreshthakur.com.np/electives']])">
+      <h2>CSIT Fifth Sem</h2>
+      <p>
+        Web Technology, System Analysis and Design, Design and Analysis of
+        Algorithms, Simulation and Modelling, Cryptography, Electives.
+      </p>
+    </div>
+
+    <div class="card"
+      onclick="openOverlay('CSIT Sixth Semester', [['Software Engineering', 'https://amreshthakur.com.np/software-engineering'], ['Compiler Design and Construction', 'https://amreshthakur.com.np/compiler-design'], ['E-Governance', 'https://amreshthakur.com.np/E-governance'], ['NET Centric Computing', 'https://amreshthakur.com.np/net-computing'], ['Technical Writing', 'https://amreshthakur.com.np/technical-writing'], ['Applied Logic elective', 'https://amreshthakur.com.np/technical-writing'], ['E-commerce elective', 'https://amreshthakur.com.np/technical-writing'], ['Automation and Robotics elective', 'https://amreshthakur.com.np/technical-writing'], ['Neural Networks elective', 'https://amreshthakur.com.np/technical-writing'], ['Computer Hardware Design elective', 'https://amreshthakur.com.np/technical-writing'], ['Cognitive Science elective', 'https://amreshthakur.com.np/technical-writing']])">
+      <h2>CSIT Sixth Sem</h2>
+      <p>
+        Software Engineering, Compiler Design, E-Governance, NET Computing,
+        Technical Writing, Electives
+      </p>
+    </div>
+    <div class="card"
+      onclick="openOverlay('CSIT Seventh Semester', [['Advanced Java Programming', 'https://amreshthakur.com.np/advanced-java'], ['Data Warehousing and Data Mining', 'https://amreshthakur.com.np/data-warehousing'], ['Principles of Management', 'https://amreshthakur.com.np/management'], ['Project Work', 'https://amreshthakur.com.np/project-work'], ['Information Retrieval elective', 'https://amreshthakur.com.np/project-work'], ['Database Administration elective', 'https://amreshthakur.com.np/project-work'], ['Software Project Management elective', 'https://amreshthakur.com.np/project-work'], ['Network Security elective', 'https://amreshthakur.com.np/project-work'], ['Digital System Design elective', 'https://amreshthakur.com.np/project-work'], ['Network and System Administration elective', 'https://amreshthakur.com.np/project-work']])">
+      <h2>CSIT Seventh Sem</h2>
+      <p>
+        Advanced Java, Data Warehousing, Management, Project Work, Electives
+      </p>
+    </div>
+    <div class="card"
+      onclick="openOverlay('CSIT Eighth Semester', [['Advanced Database', 'https://amreshthakur.com.np/advanced-database'], ['Internship', 'https://amreshthakur.com.np/internship'], ['Advanced Networking with IPv6 elective', 'https://amreshthakur.com.np/electives'], ['Distributed Networking elective', 'https://amreshthakur.com.np/electives'], ['Game Technology elective', 'https://amreshthakur.com.np/electives'], ['Distributed and Object Oriented Database elective', 'https://amreshthakur.com.np/electives'], ['Introduction to Cloud Computing elective', 'https://amreshthakur.com.np/electives'], ['Geographical Information System elective', 'https://amreshthakur.com.np/electives'], ['Decision Support System and Expert System elective', 'https://amreshthakur.com.np/electives'], ['Mobile Application Development elective', 'https://amreshthakur.com.np/electives'], ['Embedded Systems Programming elective', 'https://amreshthakur.com.np/electives'], ['International Business Management elective', 'https://amreshthakur.com.np/electives'], ['Economics of Information and Communication elective', 'https://amreshthakur.com.np/electives']])">
+      <h2>CSIT Eighth Sem</h2>
+      <p>Advanced Database, Internship, Electives</p>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlay">
+    <div class="overlay-container">
+      <div class="close-btn" onclick="closeOverlay()">X</div>
+      <div id="subject-list"></div>
+      <div id="button-container">
+        <button onclick="downloadContent()">Download</button>
+        <button onclick="openOtherActionOverlay()">Other Action</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Download Overlay -->
+  <div id="download-overlay">
+    <div class="overlay-container">
+      <div class="close-btn" onclick="closeDownloadOverlay()">X</div>
+      <div id="download-content">
+        <div id="ad-section">
+          <p>Enjoy this ad while you wait!</p>
+          <hr>
+
+          <iframe id="videoFrame" width="1200" height="500" src="https://www.youtube.com/embed/zPnAhv0jQ9E?rel=1"
+            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+          <script>
+            window.onload = function () {
+              var iframe = document.getElementById("videoFrame");
+              var src = iframe.src;
+              iframe.src = src + "&autoplay=1";
+            };
+          </script>
+          <hr>
+          <p>
+            Your download will start in <span id="timer">30</span> seconds...
+          </p>
+          <!-- You can place your ad content here -->
+        </div>
+        <button id="download-btn" onclick="startDownload()">
+          Download Now
+        </button>
+
+        <script>
+          let timeLeft = 30;
+          const timerElement = document.getElementById("timer");
+          const downloadBtn = document.getElementById("download-btn");
+
+          // Replace with your Google Drive direct download link
+          const googleDriveLink =
+            "https://drive.google.com/uc?export=download&id=15g0_2tI1yPBLFiZm9F2OSzD-FYBgabHy";
+
+          const countdown = setInterval(() => {
+            if (timeLeft <= 0) {
+              clearInterval(countdown);
+              startDownload();
+            } else {
+              timeLeft--;
+              timerElement.textContent = timeLeft;
+            }
+          }, 1000);
+
+          function startDownload() {
+            window.location.href = googleDriveLink;
+          }
+        </script>
+      </div>
+    </div>
+  </div>
+
+  <!-- Other Action Overlay -->
+  <div id="other-action-overlay">
+    <div class="overlay-container">
+      <div class="close-btn" onclick="closeOtherActionOverlay()">X</div>
+      <div id="other-action-content">
+        <h2>Other Action in Progress...</h2>
+        <p>Details about the other action.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openOverlay(title, subjects) {
+      document.getElementById("overlay").style.display = "flex";
+      const subjectListDiv = document.getElementById("subject-list");
+      subjectListDiv.innerHTML = `<h2>${title}</h2><ul>${subjects
+        .map(
+          (subject) =>
+            `<li><a href="${subject[1]}" target="_blank">${subject[0]
+            }</a><a class="download-btn" href="https://amreshthakur.com.np/${subject[0]
+              .toLowerCase()
+              .replace(/\s+/g, "-")}" target="_blank">Download</a></li>`
+        )
+        .join("")}</ul>`;
+    }
+
+    function closeOverlay() {
+      document.getElementById("overlay").style.display = "none";
+    }
+
+    function downloadContent() {
+      document.getElementById("download-overlay").style.display = "flex";
+    }
+
+    function closeDownloadOverlay() {
+      document.getElementById("download-overlay").style.display = "none";
+    }
+
+    function openOtherActionOverlay() {
+      document.getElementById("other-action-overlay").style.display = "flex";
+    }
+
+    function closeOtherActionOverlay() {
+      document.getElementById("other-action-overlay").style.display = "none";
+    }
+
+    function otherAction() {
+      alert("Other action triggered");
+    }
+  </script>
+</body>
+
+</html>
